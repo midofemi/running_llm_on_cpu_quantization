@@ -1,16 +1,36 @@
 # running_llm_on_cpu_quantization
-This project demonstrates a proof of concept for quantization by running the LLaMA model on a standard CPU-based machine. LLaMA (Large Language Model Meta AI), developed by Meta, is a state-of-the-art large language model designed for natural language processing tasks. Even the smallest version, LLaMA-7B, contains 7 billion parameters, and larger versions like LLaMA-13B, 30B, and 65B are significantly more resource-intensive.
+This project is a PDF-based Question Answering chatbot powered by a quantized version of LLaMA 2, efficient vector retrieval using FAISS, and a simple Flask web interface. Users can interact with their documents by asking questions, and the system will retrieve relevant content and generate accurate answers using local models—no internet or API key required!
 
-Due to its size, running LLaMA on machines with limited resources (like CPUs) is challenging. This proof of concept explores how quantization, a core computer science concept, can be used to reduce the memory footprint of the model by converting high-precision floating-point weights (float32) into lower-precision integer types (int8), significantly shrinking the model size.
+How to Run?
+🔹 Steps 1: Clone the Repository
 
-For example:
+git clone https://github.com/your-username/pdf-qa-chatbot.git
+cd pdf-qa-chatbot
 
-1. A float32 model with 1 million weights would typically require ~4MB of RAM.
+🔹 Steps 2: Create a Virtual Environment
 
-2. After quantization to int8, the same model would require only ~1MB — a 75% reduction in memory usage.
+conda create -n cpullama python=3.8 -y
+conda activate cpullama
+pip install -r requirements.txt
 
-Of course, this comes with trade-offs. Quantization sacrifices some accuracy, as it reduces the numerical precision of the model. However, it can lead to faster inference times, especially on resource-constrained systems.
+🔹Step 3: Download Quantized LLaMA 2 Model
+Download the quantized model and place it in the model/ directory:
 
-If speed and memory efficiency are the priority — such as when deploying models to mobile or edge devices — quantization is an excellent approach, even if it comes at the cost of some accuracy.
+llama-2-7b-chat.ggmlv3.q4_0.bin
 
-This project aims to highlight the practical application of quantization in making large-scale models like LLaMA more accessible and efficient for low-resource environments.
+🔹 Step 4: Start the Application
+
+python app.py
+
+Visit http://localhost:8080 to interact with your PDF chatbot.
+
+📁 Project Structure
+📁 data/               # PDF documents
+📁 model/              # Quantized LLaMA model file
+📁 templates/          
+ └── index.html        # Flask frontend
+📁 src/
+ └── helper.py         # Custom helper functions
+app.py                 # Main Flask application
+requirements.txt       # Python dependencies
+README.md              # You are here!
